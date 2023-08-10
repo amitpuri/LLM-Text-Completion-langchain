@@ -21,12 +21,6 @@
   
 or use these notebooks
 
-- [Gradio App](https://nbviewer.org/github/amitpuri/LLM-Text-Completion/blob/main/gradio-app.ipynb)
-- [OpenAI text-completion](https://nbviewer.org/github/amitpuri/LLM-Text-Completion/blob/main/text-completion-azure.ipynb)
-- [Azure OpenAI text-completion](https://nbviewer.org/github/amitpuri/LLM-Text-Completion/blob/main/text-completion.ipynb)
-
+- [Gradio App](https://nbviewer.org/github/amitpuri/LLM-Text-Completion-langchain/blob/main/gradio-app.ipynb)
 
 More comprehensive demo available on https://github.com/amitpuri/ask-picturize-it
-
-Further, simplify using LangChain
-- [LangChain Python](https://python.langchain.com/docs/get_started/quickstart)

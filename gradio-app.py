@@ -1,7 +1,20 @@
 import os
 import gradio as gr
 import openai
+
 import google.generativeai as palm
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
+
+from langchain.prompts.chat import (
+    ChatPromptTemplate,
+    SystemMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+from langchain.schema import HumanMessage, SystemMessage, BaseOutputParser
+
+from dotenv import load_dotenv
+load_dotenv()
+
 
 llm_api_options = ["OpenAI API","Azure OpenAI API","Google PaLM API", "Llama 2"]
 TEST_MESSAGE = "Write an introductory paragraph to explain Generative AI to the reader of this content."
@@ -13,54 +26,64 @@ google_palm_models = ["models/text-bison-001", "models/chat-bison-001","models/e
 
 temperature = 0.7
 
-def openai_text_completion(openai_api_key: str, prompt: str, model: str):
-    try:
-        system_prompt: str = "Explain in detail to help student understand the concept.",
-        assistant_prompt: str = None,
-        messages = [
-            {"role": "user", "content": f"{prompt}"},
-            {"role": "system", "content": f"{system_prompt}"},
-            {"role": "assistant", "content": f"{assistant_prompt}"}
-        ]
-        openai.api_key = openai_api_key
-        openai.api_version = '2020-11-07'
-        completion = openai.ChatCompletion.create(
-            model = model, 
-            messages = messages,
-            temperature = temperature
-        )           
-        response = completion["choices"][0]["message"].content
-        return "", response
+def compose_prompt():
+    template = ("You are a helpful assistant that answers this question.")
+    system_message_prompt = SystemMessagePromptTemplate.from_template(template)
+    human_template = "{text}"
+    human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
+    chat_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
+    return chat_prompt 
+
+
+def azure_openai_text_completion(prompt: str,
+                   model: str,
+                   api_key: str,
+                   azure_endpoint: str = None,
+                   deployment_name: str = None
+                   ):
+    try:        
+        openai_api_base = f"https://{azure_endpoint}.openai.azure.com"
+        chat_prompt = compose_prompt()
+        chat = AzureChatOpenAI(openai_api_type = "azure",                           
+                                openai_api_key = api_key,
+                                openai_api_base = openai_api_base,
+                                deployment_name = deployment_name,
+                                model = model,
+                                temperature = temperature, 
+                                openai_api_version="2023-05-15")
+        llm_response = chat(
+                chat_prompt.format_prompt(
+                    text=prompt
+                ).to_messages()
+            )
+        return "", llm_response.content
     except Exception as exception:
         print(f"Exception Name: {type(exception).__name__}")
         print(exception)
         return f" openai_text_completion Error - {exception}", ""
 
-def azure_openai_text_completion(azure_openai_api_key: str, azure_endpoint: str, azure_deployment_name: str, prompt: str, model: str):
-    try:
-        system_prompt: str = "Explain in detail to help student understand the concept.",
-        assistant_prompt: str = None,
-        messages = [
-            {"role": "user", "content": f"{prompt}"},
-            {"role": "system", "content": f"{system_prompt}"},
-            {"role": "assistant", "content": f"{assistant_prompt}"}
-        ]
-        openai.api_key = azure_openai_api_key
-        openai.api_type = "azure"
-        openai.api_version = "2023-05-15" 
-        openai.api_base = f"https://{azure_endpoint}.openai.azure.com"
-        completion = openai.ChatCompletion.create(
-            model = model, 
-            engine = azure_deployment_name,
-            messages = messages,
-            temperature = temperature
-        )           
-        response = completion["choices"][0]["message"].content
-        return "", response
+def openai_text_completion(prompt: str,
+                   model: str,
+                   api_key: str
+                   ):
+    try:        
+        chat = ChatOpenAI(openai_api_key=api_key,
+                          model=model,
+                          temperature=temperature)
+
+        chat_prompt = compose_prompt()
+        
+        llm_response = chat(
+            chat_prompt.format_prompt(
+                text=prompt
+            ).to_messages()
+        )
+        return "", llm_response.content
     except Exception as exception:
         print(f"Exception Name: {type(exception).__name__}")
         print(exception)
-        return f" azure_openai_text_completion Error - {exception}", ""
+        return f" openai_text_completion Error - {exception}", ""
+
 
 
 def palm_text_completion(google_palm_key: str, prompt: str, model: str):
@@ -102,10 +125,10 @@ def test_handler(optionSelection,
                  google_model_name: str ="models/text-bison-001"):
     match optionSelection:
         case  "OpenAI API":
-            message, response = openai_text_completion(openai_key, prompt,openai_model_name)
+            message, response = openai_text_completion(prompt,openai_model_name, openai_key)
             return message, response
         case  "Azure OpenAI API":
-            message, response = azure_openai_text_completion(azure_openai_key, azure_openai_api_base, azure_openai_deployment_name, prompt,openai_model_name)
+            message, response = azure_openai_text_completion(prompt,openai_model_name, azure_openai_key, azure_openai_api_base, azure_openai_deployment_name)
             return message, response
         case  "Google PaLM API":
             message, response = palm_text_completion(google_generative_api_key, prompt,google_model_name)

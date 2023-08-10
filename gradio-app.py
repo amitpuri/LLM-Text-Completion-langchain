@@ -12,8 +12,8 @@ from langchain.prompts.chat import (
 )
 from langchain.schema import HumanMessage, SystemMessage, BaseOutputParser
 
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 
 llm_api_options = ["OpenAI API","Azure OpenAI API","Google PaLM API", "Llama 2"]

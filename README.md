@@ -15,14 +15,10 @@
 
       pip install -r requirements.txt
   
-  OpenAI Python API
+  OpenAI Python API & Azure OpenAI Service
  
       python text-completion.py
   
-  Azure OpenAI Service
-  
-      python text-completion-azure.py
-
 or use these notebooks
 
 - [Gradio App](https://nbviewer.org/github/amitpuri/LLM-Text-Completion/blob/main/gradio-app.ipynb)

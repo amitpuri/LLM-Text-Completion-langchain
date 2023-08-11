@@ -24,8 +24,8 @@ or use these notebooks
 - [Gradio App](https://nbviewer.org/github/amitpuri/LLM-Text-Completion-langchain/blob/main/gradio-app.ipynb)
 
 
-Further, simplify using LangChain or Semantic Kernel
-- [Text Completion via OpenAI API Python](https://github.com/amitpuri/LLM-Text-Completion)
+Further, simplify using  Semantic Kernel
 - [Text Completion via Semantic Kernel](https://github.com/amitpuri/LLM-Text-Completion-Semantic-Kernel)
-
+- [Text Completion via OpenAI API Python](https://github.com/amitpuri/LLM-Text-Completion)
+  
 More comprehensive demos are available on [LLM Scenarios, Use cases on the Gradio app](https://github.com/amitpuri/ask-picturize-it)

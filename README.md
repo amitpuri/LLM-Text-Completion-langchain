@@ -33,6 +33,8 @@ or use these notebooks
 
 Further, simplify using  Semantic Kernel
 - [Text Completion via Semantic Kernel](https://github.com/amitpuri/LLM-Text-Completion-Semantic-Kernel)
+
+Alternatively, use this 
 - [Text Completion via OpenAI API Python](https://github.com/amitpuri/LLM-Text-Completion)
   
 More comprehensive demos are available on [LLM Scenarios, Use cases on the Gradio app](https://github.com/amitpuri/ask-picturize-it)

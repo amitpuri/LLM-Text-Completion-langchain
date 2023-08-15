@@ -3,8 +3,10 @@ load_dotenv()
 
 import os
 import openai
+from google.cloud import aiplatform
+from google.oauth2 import service_account
 
-from langchain.chat_models import ChatOpenAI, AzureChatOpenAI, ChatGooglePalm
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI, ChatGooglePalm, ChatVertexAI
 
 from langchain.prompts.chat import (
     ChatPromptTemplate,
@@ -12,6 +14,9 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
 )
 from langchain.schema import HumanMessage, SystemMessage, BaseOutputParser
+
+credentials = service_account.Credentials.from_service_account_file('gcp-cred.json')
+location = "us-east1"
 
 model = "gpt-4"
 temperature = 0.7
@@ -23,6 +28,8 @@ azure_openai_endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 azure_openai_deployment_name = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME")
 
 google_palm_key = os.getenv("GOOGLE_PALM_AI_API_KEY")
+
+google_project_id = os.getenv("GOOGLE_PROJECT_ID")
 
 prompt: str = "Write an introductory paragraph to explain Generative AI to the reader of this content."
 template = ("You are a helpful assistant that answers this question.")
@@ -72,12 +79,27 @@ def google_palm_text_completion():
 
    return llm_response.content
 
+def google_vertexAI_text_completion():
+   aiplatform.init(project=google_project_id,
+				location = location,
+				credentials = credentials)
+   model="models/chat-bison-001"
+   chat = ChatVertexAI(model=model,temperature = temperature)
+   llm_response = chat(
+        chat_prompt.format_prompt(
+            text = prompt
+        ).to_messages())
+
+   return llm_response.content
+
 def main():
     response = openai_text_completion()
     print(response)
     response = azureopenai_text_completion()
     print(response)
     response = google_palm_text_completion()
+    print(response)
+    response = google_vertexAI_text_completion()
     print(response)
 
 if __name__ == '__main__':

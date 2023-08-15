@@ -9,6 +9,8 @@
     - AZURE_OPENAI_ENDPOINT
     - AZURE_OPENAI_DEPLOYMENT_NAME
   - GOOGLE_PALM_AI_API_KEY from https://makersuite.google.com
+  - GOOGLE_PROJECT_ID from Google Cloud console
+  - Add GCP Credential file as gcp-cred.json
 - for running individual Python programs, use this
 
   Installation 

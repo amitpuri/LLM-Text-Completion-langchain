@@ -9,7 +9,12 @@
     - AZURE_OPENAI_ENDPOINT
     - AZURE_OPENAI_DEPLOYMENT_NAME
   - GOOGLE_PALM_AI_API_KEY from https://makersuite.google.com
-  - GOOGLE_PROJECT_ID from Google Cloud console
+  - GOOGLE_PROJECT_ID from Google Cloud console, refer to this https://cloud.google.com/vertex-ai/docs/start/cloud-environment
+      - In the Google Cloud console, on the project selector page, select or create a [Google Cloud project](https://cloud.google.com/resource-manager/docs/creating-managing-projects).
+      - Go to [project selector](https://console.cloud.google.com/projectselector2/home/dashboard)
+      - Make sure that billing is [enabled for your Google Cloud project](https://cloud.google.com/billing/docs/how-to/verify-billing-enabled#console).
+      - Enable the Vertex AI API
+          -  [Enable the API](https://console.cloud.google.com/flows/enableapi?apiid=aiplatform.googleapis.com).
   - Add GCP Credential file as gcp-cred.json for Vertex AI
 - for running individual Python programs, use this
 

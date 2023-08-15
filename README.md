@@ -1,4 +1,4 @@
-# LLM Text Completion via langchain - A Simplified Demo
+# LLM Text Completion via langchain
 
 - clone this repo
 - rename example.env to .env

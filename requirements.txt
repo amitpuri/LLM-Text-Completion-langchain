@@ -1,3 +1,5 @@
 openai
+google-generativeai
+google-cloud-aiplatform
 langchain
 python-dotenv

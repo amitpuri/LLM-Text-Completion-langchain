@@ -15,7 +15,7 @@
       - Make sure that billing is [enabled for your Google Cloud project](https://console.cloud.google.com/billing).
       - Enable the Vertex AI API
           -  [Enable the API](https://console.cloud.google.com/flows/enableapi?apiid=aiplatform.googleapis.com).
-  - Add GCP Credential file as gcp-cred.json for Vertex AI, IAM from https://console.cloud.google.com/iam-admin.
+  - Add GCP Credential file as gcp-cred.json for Vertex AI, IAM -> Service accounts from [https://console.cloud.google.com/iam-admin/serviceaccounts](https://console.cloud.google.com/iam-admin/serviceaccounts).
 - for running individual Python programs, use this
 
   Installation 

@@ -3,9 +3,8 @@ load_dotenv()
 
 import os
 import openai
-import together
 
-from langchain.chat_models import ChatOpenAI, AzureChatOpenAI, ChatGooglePalm, ChatVertexAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI, ChatGooglePalm
 
 from langchain.prompts.chat import (
     ChatPromptTemplate,
